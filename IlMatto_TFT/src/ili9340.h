@@ -18,16 +18,18 @@
 
 //_____ D E F I N I T I O N S ______________________________________________
 /**
- * \defgroup Definitions
+ * \defgroup definitions Definitions
  * @{
  */
 
-#define CTRL_PORT	PORTD
-#define CTRL_DDR	DDRD
-#define CTRL_PIN	PIND
-#define DATA_PORT	PORTB
-#define DATA_DDR	DDRB
-#define DATA_PIN	PINB
+///\todo better control on these definitions - if one is defined - we can infer the other. 
+
+#define CTRL_PORT	PORTC
+#define CTRL_DDR	DDRC
+#define CTRL_PIN	PINC
+#define DATA_PORT	PORTA
+#define DATA_DDR	DDRA
+#define DATA_PIN	PINA
 #define CS			0
 #define BLC			1
 #define RESET		2
@@ -38,7 +40,9 @@
 #define FMARK		7
 
 
-/* Basic Commands */
+/** \defgroup lcdcmds LCD Commands
+ * @{
+ */
 #define NO_OPERATION								0x00
 #define SOFTWARE_RESET								0x01
 #define READ_DISPLAY_IDENTIFICATION_INFORMATION		0x04
@@ -125,31 +129,46 @@
 #define INTERNAL_IC_SETTING							0xCB
 #define GAMMA_DISABLE								0xF2
 
+/**@}
+ */
+
+// General Characteristics
+#define WIDTH										240
+#define HEIGHT										320
 /**@}*/
 
 /**
- * \defgroup Type Defs
+ * \defgroup typedefs Type Defs
  * @{
  */
+typedef struct ili9340_tag 
+{
+	uint16_t colour;
+	} ili9340_t;
 
-#define DEFINITION //!< Explain
+ili9340_t ili9340; //< Global settings struct 
 
 /**@}*/
 
 //_____ F U N C T I O N   P R O T O T Y P E S ______________________________
 /**
- * \defgroup Function Prototypes
+ * \defgroup functions Functions
  * @{
  */
 
 void LCD_init();
 void delay();
+void SolidFill(uint16_t count);
+void SetGRAM();
+void SetWrap(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
+void SetColor(uint16_t colour);
+void OpenWrap();
 
 /**@}*/
 
 //_____ I N L I N E   F U N C T I O N S ____________________________________
 /**
- * \defgroup Inline Functions
+ * \defgroup infunctions Inline Functions
  * @{
  */
 
@@ -166,7 +185,6 @@ __inline__ void backlight_off()
 {
 	CTRL_PORT &= ~(1 << BLC);
 }
-
 /** @brief Resets the LCD Display
  */
 __inline__ void reset()
@@ -188,6 +206,84 @@ __inline__ void DataOut()
 __inline__ void DataIn()
 {
 	DATA_DDR = 0x00;
+}
+
+__inline__ void CS_Low()
+{
+	CTRL_PORT &= ~(1 << CS);
+}
+__inline__ void CS_High()
+{
+	CTRL_PORT |= (1 << CS);
+}
+__inline__ void WR_Low()
+{
+	CTRL_PORT &= ~(1 << WR);
+}
+__inline__ void WR_High()
+{
+	CTRL_PORT |= (1 << WR);
+}
+__inline__ void RS_Low()
+{
+	CTRL_PORT &= ~(1 << RS);
+}
+__inline__ void RS_High()
+{
+	CTRL_PORT |= (1 << RS);
+}
+
+__inline__ void RD_Low()
+{
+	CTRL_PORT &= ~(1 << RD);
+}
+__inline__ void RD_High()
+{
+	CTRL_PORT |= (1 << RD);
+}
+__inline__ void VSYNC_Low()
+{
+	CTRL_PORT &= ~(1 << VSYNC);
+}
+__inline__ void VSYNC_High()
+{
+	CTRL_PORT |= (1 << VSYNC);
+}
+__inline__ void Write(uint8_t data)
+{
+	DATA_PORT = data;
+}
+
+__inline__ void write_cmd(uint8_t cmd)
+{
+	RS_Low();
+	Write(cmd);
+	WR_Low();
+	WR_High();
+	RS_High();
+}
+
+__inline__ void write_data(uint8_t data)
+{
+	Write(data);
+	WR_Low();
+	WR_High();
+}
+
+__inline__ void write_data16(uint16_t data)
+{
+	write_data(data >> 8);
+	write_data(data & 0xFF);
+}
+
+__inline__ void write_cmd_data(uint8_t cmd, uint8_t ndata, char* data)
+{
+	uint8_t i;
+	write_cmd(cmd);
+	for(i=0; i<ndata; i++)
+	{
+		write_data(*data++);
+	}
 }
 
 /**@}*/
