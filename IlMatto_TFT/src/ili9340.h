@@ -142,6 +142,16 @@
 // General Characteristics
 #define WIDTH										240
 #define HEIGHT										320
+
+/** @defgroup colours Colours
+ * @{
+ */
+#define RED			0xF800
+#define BLUE		0x001F
+#define GREEN		0x07E0
+#define WHITE		0xFFFF
+#define BLACK		0x0000
+/**@}*/
 /**@}*/
 
 /**
