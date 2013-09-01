@@ -79,22 +79,7 @@ void delay()
 }
 /**@}*/
 
-/** @brief Sets the frame area of the device to the full screen  
- *
- */
-void OpenWrap()
-{
-	SetWrap(0,0,WIDTH,HEIGHT);
-}
 
-/** @brief Sets the colour of the data being written
- *  @param colour the colour to use
- *  @todo write some general definitions for some common colours.
- */ 
-void SetColor(uint16_t colour)
-{
-	ili9340.colour = colour;
-}
 
 /** @brief Fills the set memory area to a solid colour. Colour is set in the config struct.
  */

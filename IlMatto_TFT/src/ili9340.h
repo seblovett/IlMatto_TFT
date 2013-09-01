@@ -285,6 +285,22 @@ __inline__ void write_cmd_data(uint8_t cmd, uint8_t ndata, char* data)
 		write_data(*data++);
 	}
 }
+/** @brief Sets the frame area of the device to the full screen  
+ *
+ */
+__inline__ void OpenWrap()
+{
+	SetWrap(0,0,WIDTH,HEIGHT);
+}
+
+/** @brief Sets the colour of the data being written
+ *  @param colour the colour to use
+ *  @todo write some general definitions for some common colours.
+ */ 
+__inline__ void SetColor(uint16_t colour)
+{
+	ili9340.colour = colour;
+}
 
 /**@}*/
 
