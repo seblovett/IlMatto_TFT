@@ -161,8 +161,6 @@ void delay();
 void SolidFill(uint16_t count);
 void SetGRAM();
 void SetWrap(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
-void SetColor(uint16_t colour);
-void OpenWrap();
 
 /**@}*/
 
