@@ -24,18 +24,25 @@
 
 ///\todo better control on these definitions - if one is defined - we can infer the other. 
 
-#define CTRL_PORT	PORTC
-#define CTRL_DDR	DDRC
-#define CTRL_PIN	PINC
-#define DATA_PORT	PORTA
-#define DATA_DDR	DDRA
-#define DATA_PIN	PINA
+//Defaults
+#ifndef CTRL_PORT
+#define CTRL_PORT	PORTA
+#define CTRL_DDR	DDRA
+#define CTRL_PIN	PINA
+#endif
+
+#ifndef DATA_PORT
+#define DATA_PORT	PORTC
+#define DATA_DDR	DDRC
+#define DATA_PIN	PINC
+#endif
+
 #define CS			0
 #define BLC			1
 #define RESET		2
 #define WR			3
 #define RS			4
-#define RD			5
+#define RD			5 //This is actually Data or Command
 #define VSYNC		6
 #define FMARK		7
 
