@@ -11,45 +11,71 @@
 
 #include <util/delay.h>
 #include "ili9340.h"
+#include "Graphics.h"
 
-
-void Rectangle(int x, int y, int width, int height, int color)
-{
-	int right = x + width;
-	int bottom = y + height;
-	//right = min(right,(int)WIDTH);
-	//bottom = min(bottom,(int)HEIGHT);
-	//x = max(x,0);
-	//y = max(y,0);
-	width = right - x;
-	height = bottom - y;
-	if (width <= 0 || height <= 0)
-		return;
-	
-	SetWrap(x,y,width,height);
-	SetGRAM(x,y);
-	SetColor(color);
-	
-	// Keep 16 bit int range
-	while (height > 128)
-	{
-		SolidFill(width*128);
-		height -= 128;
-	}
-	SolidFill(width*height);
-}
 
 int main(void)
 {
-	
+	uint16_t i, j =0;
 	LED_init();
 	LCD_init();
-	OpenWrap();
-	//Rectangle(0,0,50,50,0xFF00);
+	
+	//A test screen
+	//Blue gradient square
+	SetWrap(0,0,80,80);
+	SetGRAM();
+	for(i = 0; i < 64; i ++)
+	{
+		for (j = 0; j < 80; j ++)
+		{
+			write_data16((i >> 1) & BLUE);
+		}
+	}
+	for ( ; i < 80; i++)
+	{
+		for (j = 0; j < 80; j ++)
+			write_data16(BLUE);
+	}
+	//Green gradient square
+	SetWrap(80,0,80,80);
+	SetGRAM();
+	for(i = 0; i < 64; i ++)
+	{
+		for (j = 0; j < 80; j ++)
+		{
+			write_data16((i << 5) & GREEN);
+		}
+	}
+	for ( ; i < 80; i++)
+	{
+		for (j = 0; j < 80; j ++)
+			write_data16(GREEN);
+	}
+	//Red gradient square
+	SetWrap(160,0,80,80);
+	SetGRAM();
+	for(i = 0; i < 64; i ++)
+	{
+		for (j = 0; j < 80; j ++)
+		{
+			write_data16((i << 10) & RED);
+		}
+	}
+	for ( ; i < 80; i++)
+	{
+		for (j = 0; j < 80; j ++)
+			write_data16(RED);
+	}
+	
+	Rectangle(20,100,20,20,WHITE);
+	SetColor(WHITE);
+	DrawString("a quick brown fox jumps over the lazy dog.", 42, 10, 150);
+	DrawString("A QUICK BROWN FOX JUMPS OVER THE", 32, 10, 170);
+	DrawString("LAZY DOG", 32, 10, 181);
     while(1)
     {
         //TODO:: Please write your application code 
-		Rectangle(0,0,WIDTH,HEIGHT, ~ili9340.colour);
+		
 		LED_toggle();
 		_delay_ms(500);
 		

@@ -112,6 +112,12 @@
     <Folder Include="src" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Graphics.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Graphics.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\ili9340.c">
       <SubType>compile</SubType>
     </Compile>
