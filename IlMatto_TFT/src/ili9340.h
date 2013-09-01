@@ -161,7 +161,7 @@ void delay();
 void SolidFill(uint16_t count);
 void SetGRAM();
 void SetWrap(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
-
+void WritePixels(int count, const uint8_t* pixels);
 /**@}*/
 
 //_____ I N L I N E   F U N C T I O N S ____________________________________

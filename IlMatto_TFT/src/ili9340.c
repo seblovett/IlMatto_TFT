@@ -23,7 +23,6 @@
 
 /** @brief Initialise the LCD Screen
  */
-
 void LCD_init()
 {
 	uint16_t x, y = 0;
@@ -184,6 +183,38 @@ void SolidFill(uint16_t count)
 			DATA_PORT = b;
 			WR_Low();
 			WR_High();
+		} while (--count);
+	}
+}
+
+void WritePixels(int count, const uint8_t* pixels)
+{
+	DataOut();
+
+	uint8_t slow = count & 0x03;
+	if (slow)
+	{
+		do {
+			write_data(pixels[0]);
+			write_data(pixels[1]);
+			pixels+=2;
+		} while (--slow);
+	}
+	
+	// x4 unrolled
+	count >>= 2;
+	if (count)
+	{
+		do {
+			write_data(pixels[0]);
+			write_data(pixels[1]);
+			write_data(pixels[2]);
+			write_data(pixels[3]);
+			write_data(pixels[4]);
+			write_data(pixels[5]);
+			write_data(pixels[6]);
+			write_data(pixels[7]);
+			pixels += 8;
 		} while (--count);
 	}
 }
