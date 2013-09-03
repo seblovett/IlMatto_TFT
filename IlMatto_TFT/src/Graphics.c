@@ -155,3 +155,21 @@ void DrawString(const char* s, int len, int x, int y)
 	for (int i = 0; i < len; i++)
 		x += DrawChar(x,y,s[i]) + 1;
 }
+
+/** @brief Draws a string to the screen from a program space string
+ *  @param s the string to draw
+ *  @param len Length of the string
+ *  @param x Horizontal start location of the string
+ *  @param y Vertical location of the string
+ */
+void DrawString_P(const char* s, int len, int x, int y)
+{
+	OpenWrap();
+	SetGRAM();
+	_ph = _pv = 0xFFFF;
+	for (int i = 0; i < len; i++)
+	{
+		x += DrawChar(x,y,pgm_read_byte(s++)) + 1;
+	}
+	
+}

@@ -41,6 +41,7 @@ void Rectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint16_t
 void PutPixel(uint16_t x, uint16_t y);
 int DrawChar(int xx, int yy, int c);
 void DrawString(const char* s, int len, int x, int y);
+void DrawString_P(const char* s, int len, int x, int y);
 /**@}*/
 
 
