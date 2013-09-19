@@ -13,7 +13,7 @@
 #include <util/delay.h>
 #include "ili9340.h"
 #include "Graphics.h"
-
+#include "testImage.h"
 #include <avr/pgmspace.h>
 
 
@@ -81,6 +81,7 @@ int main(void)
 	DrawString("LAZY DOG", 8, 10, 181);
 	DrawString_P(mydata, 10, 10, 200); //write a string stored in pgmspace
 	DrawString_P(PSTR("Hello World!"), 12, 10, 215);//another way of writing a string stored in pgmspace
+	DrawImage_P(testImage, TESTIMAGE_WIDTH, TESTIMAGE_HEIGHT, 10, 230);
     while(1)
     {
         //TODO:: Please write your application code 
