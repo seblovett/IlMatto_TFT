@@ -173,3 +173,27 @@ void DrawString_P(const char* s, int len, int x, int y)
 	}
 	
 }
+
+void DrawImage( const uint8_t *im, int width, int height, int x, int y )
+{
+	int i, max = 0;
+	SetWrap(x, y, width, height); //set the access area to the correct area
+	SetGRAM();
+	max = width * height * 2; //2 as writing 16 bit values
+	for (i = 0; i < max; i ++)
+	{
+		write_data(*(im + i));
+	}
+}
+
+void DrawImage_P( const uint8_t *im, int width, int height, int x, int y )
+{
+	int i, max = 0;
+	SetWrap(x, y, width, height); //set the access area to the correct area
+	SetGRAM();
+	max = width * height * 2; //2 as writing 16 bit values
+	for (i = 0; i < max; i ++)
+	{
+		write_data(pgm_read_byte(im + i));
+	}
+}

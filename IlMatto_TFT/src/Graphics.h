@@ -12,7 +12,7 @@
 
 //_____ I N C L U D E S ____________________________________________________
 
-#include "avr/io.h"
+#include <avr/io.h>
 
 
 //_____ D E F I N I T I O N S ______________________________________________
@@ -42,6 +42,8 @@ void PutPixel(uint16_t x, uint16_t y);
 int DrawChar(int xx, int yy, int c);
 void DrawString(const char* s, int len, int x, int y);
 void DrawString_P(const char* s, int len, int x, int y);
+void DrawImage(const uint8_t *im, int width, int height, int x, int y);
+void DrawImage_P(const uint8_t *im, int width, int height, int x, int y);
 /**@}*/
 
 
